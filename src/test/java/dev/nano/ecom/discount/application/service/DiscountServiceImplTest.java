@@ -122,4 +122,38 @@ class DiscountServiceImplTest {
 
         assertEquals(3200, discountedPrice);
     }
+
+    @Test
+    void should_return_fifty_percent_discounted_price_when_product_in_books_and_today_is_black_friday_5th_of_november() {
+        Product product = new Product(
+                "BK-05-15",
+                "Build Microservices",
+                "Build Microservices with Spring Boot",
+                Category.BOOKS,
+                Manufacture.IN_ACTION,
+                300,
+                15
+        );
+
+        double discountedPrice = discountService.calculateDiscountedPrice(product);
+
+        assertEquals(125, discountedPrice);
+    }
+
+    @Test
+    void should_return_forty_percent_discounted_price_when_product_in_books_and_today_is_not_black_friday() {
+        Product product = new Product(
+                "BK-05-17",
+                "The Lord of the Rings",
+                "The Lord of the Rings: The Fellowship of the Ring",
+                Category.BOOKS,
+                Manufacture.O_RELLY,
+                250,
+                25
+        );
+
+        double discountedPrice = discountService.calculateDiscountedPrice(product);
+
+        assertEquals(150, discountedPrice);
+    }
 }
