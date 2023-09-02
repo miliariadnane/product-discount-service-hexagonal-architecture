@@ -1,0 +1,24 @@
+# application properties
+app:
+  api:
+    version: 'v1'
+
+# Server configs
+server:
+  port: 8099
+  ## Should be included to show message, if not error message will be empty
+  error:
+    include-message: always
+    include-binding-errors: always
+  servlet:
+    context-path: /api/${app.api.version}/e-com/service
+
+# Spring properties
+spring:
+  application:
+    name: e-com-product-discount-service
+  profiles:
+    active: mongo # jpa, mongo
+
+# Include configuration based on the active profile
+spring.config.import: classpath:/application-${spring.profiles.active}.yml
