@@ -44,6 +44,12 @@
 
 -----------------
 
+## Hexagonal Architecture Illustration
+
+![Hexagonal Architecture Illustration](docs/image/hexa-arch.png)
+
+-----------------
+
 ## Support
 
 If you like my work, feel free to:
