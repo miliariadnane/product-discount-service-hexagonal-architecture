@@ -35,6 +35,7 @@ public class DiscountServiceImpl implements DiscountService {
 
     private boolean isBlackFriday() {
         LocalDate date = LocalDate.now();
+        // LocalDate date = LocalDate.of(2023, 11, 5);
         return date.getMonthValue() == 11 && date.getDayOfMonth() == 5;
     }
 }
