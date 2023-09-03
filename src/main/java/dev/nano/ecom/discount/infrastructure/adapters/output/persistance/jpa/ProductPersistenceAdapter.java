@@ -8,7 +8,6 @@ import dev.nano.ecom.discount.infrastructure.adapters.output.persistance.jpa.map
 import dev.nano.ecom.discount.infrastructure.adapters.output.persistance.jpa.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,27 +20,24 @@ public class ProductPersistenceAdapter implements ProductPort {
 
     @Override
     public void addProduct(Product product) {
+        double discountedPrice = discountService.calculateDiscountedPrice(product);
         ProductEntity productEntity = productMapper.toEntity(product);
+        productEntity.setPrice(discountedPrice);
         productRepository.save(productEntity);
     }
 
     @Override
     public void removeProduct(Product product) {
-        double discountedPrice = discountService.calculateDiscountedPrice(product);
         ProductEntity productEntity = productMapper.toEntity(product);
-        productEntity.setPrice(discountedPrice);
         productRepository.delete(productEntity);
     }
 
     @Override
     public List<Product> getProducts() {
-        List<Product> products = new ArrayList<>();
         List<ProductEntity> productEntityList = productRepository.findAll();
-        for(ProductEntity productEntity : productEntityList) {
-            Product product = productMapper.entityToProduct(productEntity);
-            products.add(product);
-        }
-        return products;
+        return productEntityList.stream()
+                .map(productMapper::entityToProduct)
+                .toList();
     }
 
     @Override

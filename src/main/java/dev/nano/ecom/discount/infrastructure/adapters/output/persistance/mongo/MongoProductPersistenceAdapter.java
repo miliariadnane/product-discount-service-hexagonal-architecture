@@ -34,8 +34,8 @@ public class MongoProductPersistenceAdapter implements ProductPort {
 
     @Override
     public List<Product> getProducts() {
-        List<MongoProductEntity> entities = mongoProductRepository.findAll();
-        return entities.stream()
+        List<MongoProductEntity> mongoProductEntityList = mongoProductRepository.findAll();
+        return mongoProductEntityList.stream()
                 .map(mongoProductMapper::entityToProduct)
                 .toList();
     }

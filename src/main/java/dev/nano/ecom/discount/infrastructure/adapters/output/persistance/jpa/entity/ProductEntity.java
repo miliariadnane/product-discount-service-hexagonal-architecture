@@ -7,25 +7,26 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "products", schema = "public")
 @Getter @Setter
 @NoArgsConstructor(force = true) @AllArgsConstructor
 public class ProductEntity {
+
     @Id
-    @SequenceGenerator(
-            name = "invoice_sequence",
-            sequenceName = "invoice_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "invoice_sequence"
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(
+            name = "uuid",
+            strategy = "org.hibernate.id.UUIDGenerator"
     )
     @Column(
             name = "id",
-            updatable = false
+            updatable = false,
+            unique = true,
+            nullable = false,
+            columnDefinition = "VARCHAR(255)"
     )
     private String id;
 
